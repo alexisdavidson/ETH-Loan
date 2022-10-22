@@ -3,7 +3,8 @@ pragma solidity ^0.8.4;
 
 import "@openzeppelin/contracts/access/Ownable.sol";
 
-contract LoanFacility is Ownable {
+// Communicates with API via Oracle
+contract GuarantyOracle is Ownable {
     
     string public bearerToken = "";
 
