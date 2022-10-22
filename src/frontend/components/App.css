@@ -1,0 +1,174 @@
+@font-face {
+  font-family: myFirstFont;
+  src: url("./assets/JandaManateeSolid.ttf");
+}
+
+@media only screen and (orientation:portrait){
+  #wrapper { display:none; }
+  #warning-message { display:block; }
+}
+@media only screen and (orientation:landscape){
+  #warning-message { display:none; }
+}
+
+body {
+  height: 100vh;
+}
+
+.App {
+  text-align: center;
+  background-image: url("./assets/bg.png");
+  background-repeat: no-repeat;
+  background-size: cover;
+  width: auto;
+  height: 100vh;
+  font-family: myFirstFont;
+  color: white;
+}
+
+.center {
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+  width: 50%;
+}
+
+a:link, a:visited, a:hover, a:active {
+  color: white;
+  text-decoration: none;
+}
+
+.modal {
+  /* background-image: url("./assets/complete_window.png"); */
+}
+
+.popupFrame {
+  position : fixed;
+  top : 0%;
+  left : 0%;
+  height:100vh;
+  background-color: rgb(122,122,122,0.5);
+}
+
+.splashScreen {
+  position : fixed;
+  top : 10%;
+  left : 25%;
+  background-image: url("./assets/complete_window.png");
+  width: 50%;
+  height: 70%;
+  background-repeat: no-repeat;
+  background-size: 100% 100%;
+  margin: auto;
+  padding: auto;
+  font-size: 5vh;
+  display: flex;
+}
+
+.frameCloseButton, .frameCloseButton:hover {
+  position : fixed;
+  top : 10%;
+  left : 70%;
+  margin: 0;
+  padding: 0;
+  background-color: rgb(0, 0, 0, 0);
+  width: 10vh;
+  height: 10vh;
+  border-color: rgb(0, 0, 0, 0);
+}
+
+::-webkit-scrollbar {
+  display: none;
+}
+
+.WarningMessage {
+  text-align: center;
+  background-size: cover;
+  margin-top: 10vh;
+}
+
+.roseButton {
+  background-image: url("./assets/Group 20.png");
+  width: 27vh;
+  height: 11vh;
+  font-size: 5vh;
+  background-size: cover;
+  margin: auto;
+  padding: auto;
+  display: flex;
+}
+
+.roseButton p {
+  margin: auto;
+}
+
+.pinkButton {
+  background-image: url("./assets/Group 26.png");
+  width: 27vh;
+  height: 11vh;
+  font-size: 5vh;
+  background-size: cover;
+  margin: auto;
+  padding: auto;
+  display: flex;
+}
+
+.pinkButton p {
+  margin: auto;
+}
+
+.purpleButton {
+  background-image: url("./assets/Group 22.png");
+  width: 27vh;
+  height: 11vh;
+  font-size: 5vh;
+  background-size: cover;
+  margin: auto;
+  padding: auto;
+  display: flex;
+}
+
+.purpleButton p {
+  margin: auto;
+}
+
+.grayButton {
+  background-image: url("./assets/Group 24.png");
+  width: 27vh;
+  height: 11vh;
+  font-size: 5vh;
+  background-size: cover;
+  margin: auto;
+  padding: auto;
+  display: flex;
+}
+
+.grayButton p {
+  margin: auto;
+}
+
+.infoButton {
+  width: 11vh;
+  height: 11vh;
+  font-size: 5vh;
+  margin: auto;
+  padding: auto;
+  display: flex;
+}
+
+.my-4 {
+  margin-top: 2.5vh !important;
+  margin-bottom: 2.5vh !important;
+}
+
+.mt-4 {
+  margin-top: 2.5vh !important;
+}
+
+.p-5 {
+  padding: 5.1vh !important;
+}
+
+.ps-5 {
+  padding-left: 5.1vh !important;
+}

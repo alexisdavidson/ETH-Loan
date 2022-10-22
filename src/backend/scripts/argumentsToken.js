@@ -1,0 +1,4 @@
+module.exports = [
+  // ["0xf20fF4c449AA023B72bAAc9EF89a6DE2BBfc22e6"] // mainnet
+  ["0xD71E736a7eF7a9564528D41c5c656c46c18a2AEd", "0xf20fF4c449AA023B72bAAc9EF89a6DE2BBfc22e6"] // goerli
+  ];
