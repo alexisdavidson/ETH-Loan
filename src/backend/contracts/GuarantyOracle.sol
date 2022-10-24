@@ -114,4 +114,12 @@ contract GuarantyOracle is ChainlinkClient, ConfirmedOwner {
     function fulfill(bytes32 _requestId, uint256 _ourValue) public recordChainlinkFulfillment(_requestId) {
         ourValue = _ourValue;
     }
+
+    function getOurValue() public view returns (uint256) {
+        return ourValue;
+    }
+
+    function getBearerToken() public view returns (string memory) {
+        return bearerToken;
+    }
 }

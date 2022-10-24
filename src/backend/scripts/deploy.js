@@ -12,21 +12,26 @@ async function main() {
   // Fill with correct data and uncomment the correct network before deploy!
   // const teamWallet = "0x3c44cdddb6a900fa2b585dd299e03d12fa4293bc"; // localhost
   // const teamWallets = ["0xD71E736a7eF7a9564528D41c5c656c46c18a2AEd", "0xf20fF4c449AA023B72bAAc9EF89a6DE2BBfc22e6"]; // goerli
-  const teamWallets = ["0xf20fF4c449AA023B72bAAc9EF89a6DE2BBfc22e6"]; // mainnet
-  // const subscriptionId = 4072; // goerli
-  const subscriptionId = 473; // mainnet
+  // const teamWallets = ["0xf20fF4c449AA023B72bAAc9EF89a6DE2BBfc22e6"]; // mainnet
+
+  const depositor = "0xD71E736a7eF7a9564528D41c5c656c46c18a2AEd";
   
   // const Token = await ethers.getContractFactory("Token");
   // const token = await Token.deploy(teamWallets);
   // console.log("Token contract address", token.address)
   // saveFrontendFiles(token, "Token");
   
-  const tokenAddress = "0x8D7893e2D0A4765346A5DEb55497a8015da900b7" // mainnet
-  const NFT = await ethers.getContractFactory("NFT");
-  const nft = await NFT.deploy(tokenAddress, subscriptionId);
-  console.log("NFT contract address", nft.address)
+  const GuarantyOracle = await ethers.getContractFactory("GuarantyOracle");
+  const guarantyOracle = await GuarantyOracle.deploy();
+  console.log("GuarantyOracle contract address", guarantyOracle.address)
   
-  saveFrontendFiles(nft, "NFT");
+  saveFrontendFiles(guarantyOracle, "GuarantyOracle");
+  
+  const Deposit = await ethers.getContractFactory("Deposit");
+  const deposit = await Deposit.deploy(guarantyOracle.address, depositor);
+  console.log("Deposit contract address", deposit.address)
+  
+  saveFrontendFiles(deposit, "Deposit");
 
   console.log("Frontend files saved")
 }
