@@ -12,7 +12,11 @@ contract GuarantyOracle is ChainlinkClient, ConfirmedOwner {
     bytes32 private jobId;
     uint256 private fee;
 
-    event RequestVolume(bytes32 indexed requestId, uint256 volume);
+    event RequestAuthenticate();
+    event ResultAuthenticate(bytes32 indexed requestId, string token);
+
+    event RequestContractData();
+    event ResultContractData(bytes32 indexed requestId, uint256 value);
     
     string public bearerToken = "";
 
@@ -29,6 +33,11 @@ contract GuarantyOracle is ChainlinkClient, ConfirmedOwner {
     function withdrawLink() public onlyOwner {
         LinkTokenInterface link = LinkTokenInterface(chainlinkTokenAddress());
         require(link.transfer(msg.sender, link.balanceOf(address(this))), 'Unable to transfer');
+    }
+
+    function linkBalance() public view returns(uint256) {
+        LinkTokenInterface link = LinkTokenInterface(chainlinkTokenAddress());
+        return link.balanceOf(address(this));
     }
 
     function apiAuthenticate(string calldata _clientId, string calldata _clientSecret, string calldata _grantType) public onlyOwner returns (bytes32 requestId) {
@@ -51,14 +60,18 @@ contract GuarantyOracle is ChainlinkClient, ConfirmedOwner {
         // }
         req.add('path', 'access_token'); // Chainlink nodes 1.0.0 and later support this format
 
+        emit RequestAuthenticate();
+
         return sendChainlinkRequest(req, fee);
     }
 
     /**
      * Receive the response in the form of string
      */
-    function fulfillBearer(bytes32 _requestId, string memory _bearerToken) public recordChainlinkFulfillment(_requestId) {
-        bearerToken = _bearerToken;
+    function fulfillBearer(bytes32 _requestId, bytes memory bytesData) public recordChainlinkFulfillment(_requestId) {
+        bearerToken = string(bytesData);
+
+        emit ResultAuthenticate(_requestId, bearerToken);
     }
 
     function apiGetContractData(string calldata _contractId) public onlyOwner returns (bytes32 requestId) {
@@ -105,6 +118,8 @@ contract GuarantyOracle is ChainlinkClient, ConfirmedOwner {
         int256 timesAmount = 10**2;
         req.addInt('times', timesAmount);
 
+        emit RequestContractData();
+
         return sendChainlinkRequest(req, fee);
     }
 
@@ -113,6 +128,8 @@ contract GuarantyOracle is ChainlinkClient, ConfirmedOwner {
      */
     function fulfill(bytes32 _requestId, uint256 _ourValue) public recordChainlinkFulfillment(_requestId) {
         ourValue = _ourValue;
+
+        emit ResultContractData(_requestId, _ourValue);
     }
 
     function getOurValue() public view returns (uint256) {
