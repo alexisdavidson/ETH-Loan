@@ -12,10 +12,10 @@ contract GuarantyOracle is ChainlinkClient, ConfirmedOwner {
     bytes32 private jobId;
     uint256 private fee;
 
-    event RequestAuthenticate();
+    event RequestAuthenticate(string url);
     event ResultAuthenticate(bytes32 indexed requestId, string token);
 
-    event RequestContractData();
+    event RequestContractData(string url);
     event ResultContractData(bytes32 indexed requestId, uint256 value);
     
     string public bearerToken = "";
@@ -49,8 +49,9 @@ contract GuarantyOracle is ChainlinkClient, ConfirmedOwner {
             "&client_secret=", _clientSecret,
             "&grant_type=", _grantType));
             
-        Chainlink.Request memory req = buildChainlinkRequest(jobId, address(this), this.fulfillBearer.selector);
-        req.add('post', _url);
+        Chainlink.Request memory req = buildChainlinkRequest(jobId, address(this), this.fulfill.selector);
+        // req.add('post', _url);
+        req.add('post', "https://reqres.in/api/users");
 
         // Set the path to find the desired data in the API response, where the response format is:
         // {
@@ -58,9 +59,10 @@ contract GuarantyOracle is ChainlinkClient, ConfirmedOwner {
         // "expires_in": 3600,
         // "token_type": "Bearer"
         // }
-        req.add('path', 'access_token'); // Chainlink nodes 1.0.0 and later support this format
+        // req.add('path', 'access_token'); // Chainlink nodes 1.0.0 and later support this format
+        req.add('path', 'page'); // Chainlink nodes 1.0.0 and later support this format
 
-        emit RequestAuthenticate();
+        emit RequestAuthenticate(_url);
 
         return sendChainlinkRequest(req, fee);
     }
@@ -118,7 +120,7 @@ contract GuarantyOracle is ChainlinkClient, ConfirmedOwner {
         int256 timesAmount = 10**2;
         req.addInt('times', timesAmount);
 
-        emit RequestContractData();
+        emit RequestContractData(_url);
 
         return sendChainlinkRequest(req, fee);
     }
@@ -138,5 +140,9 @@ contract GuarantyOracle is ChainlinkClient, ConfirmedOwner {
 
     function getBearerToken() public view returns (string memory) {
         return bearerToken;
+    }
+
+    function setBearerToken(string calldata _bearerToken) public onlyOwner {
+        bearerToken = _bearerToken;
     }
 }
