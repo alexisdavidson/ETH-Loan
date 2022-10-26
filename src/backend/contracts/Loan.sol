@@ -19,6 +19,8 @@ contract Loan is Ownable {
     uint256 totalAvailableCapital;
     uint256 totalRepayedCapital;
     uint256 futureValue;
+
+    uint256 oracleValue;
     
     struct CommitedDepositor {
         address _address;
@@ -35,8 +37,12 @@ contract Loan is Ownable {
         depositContract = _depositContract;
     }
 
+    function setOracleValue(uint256 _oracleValue) public {
+        oracleValue = _oracleValue;
+    }
+
     function checkColateral(uint256 _requestAmount) view public returns(bool) {
-        uint256 _value = _requestAmount * requiredCollateralRatio / decimal - totalAmountWithdrawn;
+        uint256 _value = oracleValue * requiredCollateralRatio / decimal - totalAmountWithdrawn;
         return _value > calculateFutureValue(_requestAmount);
     }
 
@@ -74,7 +80,7 @@ contract Loan is Ownable {
         return depositorProRatas;
     }
 
-    function repayDepository(uint256 _amortizationAmount) payable public {
+    function repayDepository(uint256 _amortizationAmount) payable public onlyOwner {
         DepositorProRata[] memory depositorProRatas = calculateProRata();
 
         uint256 _depositorsLength = depositorProRatas.length;
