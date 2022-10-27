@@ -10,6 +10,8 @@ const clientSecret = "d9kv1ir3odqqt6m6r351b210cvjonc5ej3icfumnh0v52e65do5"
 const grantType = "client_credentials"
 const contractId = "0a0bc10a-2733-4998-8566-989cd3666a81"
 
+let contracts = {}
+
 dotenv.config()
 
 app.use(cors())
@@ -35,7 +37,10 @@ app.get('/api/get_contract_data', async (req, res) => {
     const responseJson = await response.json()
     console.log(responseJson)
     const accessToken = responseJson.access_token
-    callContractData(accessToken)
+    await callContractData(accessToken)
+
+    console.log(contracts)
+    res.send(contracts)
 })
 
 const callContractData = async (bearerToken) => {
@@ -56,6 +61,9 @@ const callContractData = async (bearerToken) => {
       console.log(responseJson)
       const ourValue = responseJson.contract.anticipationList[0].ourValue / 100
       console.log("OurValue: " + ourValue)
+
+      // Saving value to dictionary
+      contracts[contractId] = ourValue
 }
 
 app.listen(process.env.PORT, () => {
