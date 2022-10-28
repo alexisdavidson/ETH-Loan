@@ -33,7 +33,7 @@ contract GuarantyOracle is ChainlinkClient, ConfirmedOwner {
         return link.balanceOf(address(this));
     }
 
-    // use "http://localhost:3001/" for _apiUrl
+    // locally you would use "localhost:3001" for _apiUrl
     function apiGetContractData(string calldata _contractId, string calldata _apiUrl) public onlyOwner returns (bytes32 requestId) {
         // curl --request GET \
         //      --url http://localhost:3001/api/get_contract_data?contract_id=0a0bc10a-2733-4998-8566-989cd3666a81 \
