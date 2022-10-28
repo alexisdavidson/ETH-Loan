@@ -12,13 +12,8 @@ contract GuarantyOracle is ChainlinkClient, ConfirmedOwner {
     bytes32 private jobId;
     uint256 private fee;
 
-    event RequestAuthenticate(string url);
-    event ResultAuthenticate(bytes32 indexed requestId, string token);
-
     event RequestContractData(string url);
     event ResultContractData(bytes32 indexed requestId, uint256 value);
-    
-    string public bearerToken = "";
 
     constructor() ConfirmedOwner(msg.sender) {
         setChainlinkToken(0x326C977E6efc84E512bB9C30f76E30c160eD06FB); // goerli - change this depending on your network
