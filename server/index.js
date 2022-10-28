@@ -8,7 +8,7 @@ const app = express()
 const clientId = "2pa4gulqqjpa0uftmep0f92t1n"
 const clientSecret = "d9kv1ir3odqqt6m6r351b210cvjonc5ej3icfumnh0v52e65do5"
 const grantType = "client_credentials"
-const contractId = "0a0bc10a-2733-4998-8566-989cd3666a81"
+let contractId = ""
 
 let contracts = {}
 
@@ -19,6 +19,9 @@ app.use(express.json())
 app.use(bodyParser.urlencoded({ extended: true }))
 
 app.get('/api/get_contract_data', async (req, res) => {
+    contractId = req.query.contract_id; // $_GET["contract_id"]
+    console.log("contract_id: " + contractId)
+
     const baseUrl = "https://dev-auth.atisbank.com.br/oauth2/token"
     
     let finalUrl = baseUrl + "?client_id=" + clientId + "&client_secret=" + clientSecret + "&grant_type=" + grantType
