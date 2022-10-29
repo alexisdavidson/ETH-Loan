@@ -9,7 +9,7 @@ const clientId = "2pa4gulqqjpa0uftmep0f92t1n"
 const clientSecret = "d9kv1ir3odqqt6m6r351b210cvjonc5ej3icfumnh0v52e65do5"
 const grantType = "client_credentials"
 let contractId = ""
-let ourvalue = 0
+let ourValue = 0
 
 let contracts = {}
 
@@ -45,7 +45,13 @@ app.get('/api/get_contract_data', async (req, res) => {
 
     console.log(contracts)
     // res.send(contracts)
-    res.send(ourValue)
+    console.log(ourValue)
+    // res.sendStatus(ourValue)
+    res.send([
+      {
+        ourValue: ourValue
+      }
+    ])
 })
 
 const callContractData = async (bearerToken) => {
